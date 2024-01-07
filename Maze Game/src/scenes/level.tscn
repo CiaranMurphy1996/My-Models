@@ -1,0 +1,46 @@
+[gd_scene load_steps=9 format=3 uid="uid://d0fong4a5n31c"]
+
+[ext_resource type="Script" path="res://src/scenes/level.gd" id="1_at0g2"]
+[ext_resource type="PackedScene" uid="uid://bqqlnv8rtwvom" path="res://src/ui/user_interface.tscn" id="2_b8jmq"]
+[ext_resource type="MeshLibrary" uid="uid://c2ppiokd60f43" path="res://assets/mesh_libraries/wall_components.meshlib" id="2_g52t0"]
+[ext_resource type="Environment" uid="uid://dwbw3bqpeigmc" path="res://src/environments/default_env.tres" id="2_wd5pq"]
+[ext_resource type="PackedScene" uid="uid://d2ldefknq4h3p" path="res://assets/models/floor_plane.tscn" id="4_o1l78"]
+[ext_resource type="PackedScene" uid="uid://c723smpdrwlie" path="res://src/components/player.tscn" id="5_co04d"]
+[ext_resource type="PackedScene" uid="uid://rtyyatngy5m6" path="res://src/components/goal.tscn" id="7_k38rh"]
+[ext_resource type="AudioStream" uid="uid://dh5f3y0vteywu" path="res://assets/sfx/children_soundtrack_1.wav" id="8_w1li3"]
+
+[node name="Level" type="Node3D"]
+script = ExtResource("1_at0g2")
+
+[node name="UserInterface" parent="." instance=ExtResource("2_b8jmq")]
+
+[node name="UpdateUITimer" type="Timer" parent="."]
+autostart = true
+
+[node name="GridMap" type="GridMap" parent="."]
+mesh_library = ExtResource("2_g52t0")
+cell_size = Vector3(1, 2, 1)
+cell_center_y = false
+
+[node name="floor_plane" parent="." instance=ExtResource("4_o1l78")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("2_wd5pq")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965926, 0, -0.965926, 0.258819, 0, 0, 0)
+
+[node name="Player" parent="." instance=ExtResource("5_co04d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Goal" parent="." instance=ExtResource("7_k38rh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_w1li3")
+volume_db = -12.0
+autoplay = true
+
+[connection signal="timeout" from="UpdateUITimer" to="." method="_on_update_ui_timer_timeout"]
+
+[editable path="floor_plane"]

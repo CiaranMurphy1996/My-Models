@@ -1,0 +1,97 @@
+[gd_scene load_steps=2 format=3 uid="uid://bqqlnv8rtwvom"]
+
+[ext_resource type="Script" path="res://src/ui/user_interface.gd" id="1_l1qar"]
+
+[node name="UserInterface" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_l1qar")
+
+[node name="LevelNameLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -45.5
+offset_top = 25.0
+offset_right = 45.5
+offset_bottom = 48.0
+grow_horizontal = 2
+text = "LEVEL ZERO"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TimeElapsedLabel" type="Label" parent="."]
+layout_mode = 1
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 181.0
+offset_bottom = 61.0
+text = "Time: 0"
+
+[node name="SuccessPanel" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 52.0
+offset_top = 47.0
+offset_right = -52.0
+offset_bottom = -47.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SuccessLabel" type="Label" parent="SuccessPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -228.0
+offset_top = 59.0
+offset_right = 228.0
+offset_bottom = 126.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 48
+text = "SUCCESS!"
+horizontal_alignment = 1
+
+[node name="LevelPlayTimeLabel" type="Label" parent="SuccessPanel"]
+layout_mode = 2
+offset_left = 337.0
+offset_top = 163.0
+offset_right = 839.0
+offset_bottom = 186.0
+text = "LEVEL COMPLETED IN 1 MINUTES AND 10 SECONDS"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SuccessPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -219.0
+offset_top = -52.0
+offset_right = 219.0
+offset_bottom = 52.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NextLevelButton" type="Button" parent="SuccessPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+text = "NEXT LEVEL"
+
+[node name="QuitButton" type="Button" parent="SuccessPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+text = "QUIT"
+
+[connection signal="button_up" from="SuccessPanel/VBoxContainer/NextLevelButton" to="." method="_on_next_level_button_button_up"]
+[connection signal="button_up" from="SuccessPanel/VBoxContainer/QuitButton" to="." method="_on_quit_button_button_up"]

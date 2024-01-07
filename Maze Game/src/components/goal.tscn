@@ -1,0 +1,75 @@
+[gd_scene load_steps=8 format=3 uid="uid://rtyyatngy5m6"]
+
+[ext_resource type="Script" path="res://src/components/goal.gd" id="1_elkcm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hx7gr"]
+albedo_color = Color(0.784314, 0.0196078, 0.470588, 1)
+metallic_specular = 1.0
+roughness = 0.0
+emission_enabled = true
+emission = Color(0.992157, 0.258824, 0.67451, 1)
+emission_energy_multiplier = 2.77
+
+[sub_resource type="SphereMesh" id="SphereMesh_142af"]
+material = SubResource("StandardMaterial3D_hx7gr")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_aey84"]
+
+[sub_resource type="Animation" id="Animation_5qgwa"]
+resource_name = "bob"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0.089487, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_wh1gt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xmv1p"]
+_data = {
+"RESET": SubResource("Animation_wh1gt"),
+"bob": SubResource("Animation_5qgwa")
+}
+
+[node name="Goal" type="Area3D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_elkcm")
+
+[node name="Pivot" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pivot"]
+mesh = SubResource("SphereMesh_142af")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_aey84")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_xmv1p")
+}
+autoplay = "bob"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

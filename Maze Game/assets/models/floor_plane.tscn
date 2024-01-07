@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://d2ldefknq4h3p"]
+
+[ext_resource type="PackedScene" uid="uid://b0n3hl1iodd63" path="res://assets/models/floor_plane.glb" id="1_0jue2"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_cjwhu"]
+points = PackedVector3Array(-1, 0, -1, -1, 0, 0.999979, 1, 0, -1, 1, 0, 0.999979)
+
+[node name="floor_plane" instance=ExtResource("1_0jue2")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="FloorPlane" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FloorPlane/StaticBody3D" index="0"]
+shape = SubResource("ConvexPolygonShape3D_cjwhu")
